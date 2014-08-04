@@ -5,11 +5,11 @@ require 'fluent/plugin/ohai/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "fluent-plugin-ohai"
-  spec.version       = Fluent::Plugin::Ohai::VERSION
+  spec.version       = 0.0.1
   spec.authors       = ["Florian Rosenberg"]
   spec.email         = ["f.rosenberg@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Plugin for fluentd to read data from ohai.}
+  spec.description   = %q{The plugin reads ohai data from the system and emits it to fluentd. It can be configured to re-run at a certain interval.}
   spec.homepage      = ""
   spec.license       = "MIT"
 

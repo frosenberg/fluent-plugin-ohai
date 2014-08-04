@@ -13,7 +13,6 @@ module Fluent
     config_param :tag, :string, :default => "ohai.message"
     config_param :hostname, :string, :default => ENV["HOSTNAME"]
     config_param :ohai_path, :string, :default => nil
-    config_param :option, :string, :default => nil
     config_param :interval, :string, :default => '1200m' # 24h
 
     def configure(conf)
@@ -55,11 +54,11 @@ module Fluent
         begin
           stdout, stderr, status = Open3.capture3(@ohai_cmd)
           if status.success?                
-            # replace hostname if user configured it this way
+            # replace hostname in ohai json if user configured it this way
             json = JSON.parse(stdout)
             json['hostname'] = @hostname
             now = Engine.now
-            log.info "['#{now}'] Emitting ohai data"
+            log.debug "['#{now}'] Emitting ohai data"
             Engine.emit("#{@tag}", now, json)
           else
             log.error "Command '#{@ohai_cmd}' failed with exit code #{status} and message '#{stderr}'"          

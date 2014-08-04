@@ -1,11 +1,7 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'fluent/plugin/ohai/version'
-
 Gem::Specification.new do |spec|
   spec.name          = "fluent-plugin-ohai"
-  spec.version       = 0.0.1
+  spec.version       = "0.0.1"
   spec.authors       = ["Florian Rosenberg"]
   spec.email         = ["f.rosenberg@gmail.com"]
   spec.summary       = %q{Plugin for fluentd to read data from ohai.}

@@ -48,26 +48,28 @@ module Fluent
       Thread.kill(@thread)
     end
 
-    def run      
-      begin
-        stdout, stderr, status = Open3.capture3(@ohai_cmd)
-        if status.success?    
-          
-          # replace hostname if user configured it this way
-          json = JSON.parse(stdout)
-          json['hostname'] = @hostname
+    def run
 
-          Engine.emit("#{@tag}", Engine.now, json)
-        else
-          log.error "Command '#{@ohai_cmd}' failed with exit code #{status} and message '#{stderr}'"          
+      loop do 
+                      
+        begin
+          stdout, stderr, status = Open3.capture3(@ohai_cmd)
+          if status.success?                
+            # replace hostname if user configured it this way
+            json = JSON.parse(stdout)
+            json['hostname'] = @hostname
+            now = Engine.now
+            log.info "['#{now}'] Emitting ohai data"
+            Engine.emit("#{@tag}", now, json)
+          else
+            log.error "Command '#{@ohai_cmd}' failed with exit code #{status} and message '#{stderr}'"          
+          end
+        rescue StandardError => e
+          log.error "ohai-plugin: failed to run ohai."
+          log.error "error: #{e.message}"
+          log.error e.backtrace.join("\n")
         end
-
-        sleep @interval
-
-      rescue StandardError => e
-        log.error "ohai-plugin: failed to run ohai."
-        log.error "error: #{e.message}"
-        log.error e.backtrace.join("\n")
+        sleep @interval      
       end
     end
 

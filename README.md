@@ -29,3 +29,8 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+=======
+fluent-plugin-ohai
+==================
+
+An input plugin for fluentd to send ohai data. 
